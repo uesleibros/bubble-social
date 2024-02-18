@@ -15,6 +15,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const [loaded, setLoaded] = useState<boolean>(false);
   const [confettiActivated, setConfettiActivated] = useState<boolean>(false);
+  const [isSignUpModalVisible, setIsSignUpModalVisible] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,6 +23,10 @@ export default function Index() {
     }, 800);
     return () => clearTimeout(timer);
   }, []);
+
+  function toggleSignUpModal(isVisible) {
+    setIsSignUpModalVisible(isVisible);
+  };
 
   function handleConfetti() {
     setConfettiActivated(true);
@@ -59,7 +64,7 @@ export default function Index() {
             </h1>
             <hr className="my-1" />
             <div className="mt-3 flex flex-col gap-2">
-              <button type="button" className="bg-gray-900 text-white font-[Poppins] rounded-sm p-2 w-full transition-colors hover:bg-gray-600">Criar uma conta</button>
+              <button type="button" className="bg-gray-900 text-white font-[Poppins] rounded-sm p-2 w-full transition-colors hover:bg-gray-600" onClick={() => toggleSignUpModal(true)}>Criar uma conta</button>
               <button type="button" className="bg-gray-100 border border-gray-400 text-black font-[Poppins] rounded-sm p-2 w-full transition-colors hover:bg-white">Conectar-se</button>
             </div>
             <p className="mt-5 text-gray-600 font-[Poppins] text-xs">
@@ -68,7 +73,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <SignUpModal visible={true} />
+      <SignUpModal visible={isSignUpModalVisible} toggleModal={toggleSignUpModal} />
     </div>
   );
 }
